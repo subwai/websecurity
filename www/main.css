@@ -9,13 +9,17 @@ body {
   color: #5a5a5a;
 }
 #site-wrapper {
-  padding-top: 80px;
   min-height: 100%;
   box-sizing: border-box;
   position: relative;
 }
-.container.marketing {
-  padding-bottom: 80px;
+.container.main {
+  padding: 80px 0;
+}
+@media (max-width: 979px) {
+  .container.main {
+    padding-top: 0;
+  }
 }
 footer {
   position:absolute;

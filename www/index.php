@@ -46,7 +46,7 @@ include "general.php";
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
 
-    <div class="container marketing">
+    <div class="container main">
       <h1>Items</h1>
       <div class="row-fluid">
         <div class="span9">

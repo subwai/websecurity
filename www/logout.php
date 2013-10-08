@@ -51,7 +51,7 @@ try {
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
 
-    <div class="container marketing">
+    <div class="container main">
 
       <h1>Logout</h1>
 
