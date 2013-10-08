@@ -86,6 +86,7 @@ class Functions {
 			$_SESSION["username"] = $username;
 			$_SESSION["auth"] = true;
 			session_regenerate_id();
+			$_SESSION["identity"] = $_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"];
 			return true;
 		}
 	}

@@ -47,9 +47,8 @@ try {
       </div><!-- /.navbar-inner -->
     </div><!-- /.navbar -->
 
-    <!-- Marketing messaging and featurettes
+    <!--MAIN CONTAINER
     ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
 
     <div class="container main">
 
