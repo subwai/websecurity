@@ -19,13 +19,19 @@ class Functions {
 	}
 
 	function fetchSelectedItems() {
-		$items = isset($_COOKIE["items"]) ? explode("-", $_COOKIE["items"]) : array();
+		$ids = isset($_COOKIE["items"]) ? explode("-", $_COOKIE["items"]) : array();
+		$items = array();
 
 		$this->dbConnect();
-		$stmt = $this->conn->prepare("SELECT * FROM items WHERE id IN (".str_pad("",count($items)*2-1,"?,").")");
-		$stmt->execute($items);
+		$stmt = $this->conn->prepare("SELECT * FROM items WHERE id=?");
 		$stmt->setFetchMode(PDO::FETCH_CLASS, "ItemModel");
-		return $stmt->fetchAll();
+		foreach ($ids as $id) {
+			$stmt->execute(array($id));
+			if ($item = $stmt->fetch()) {
+				$items[] = $item;
+			}
+		}
+		return $items;
 	}
 
 	function register($username, $password, $password_repeat) {

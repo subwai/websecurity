@@ -50,14 +50,14 @@ include "general.php";
       <h1>Items</h1>
       <div class="row-fluid">
         <div class="span9">
-          <table class="table table-striped table-bordered">
+          <table class="table table-striped table-bordered" id="items">
             <tbody>
               <?php foreach ($functions->fetchItems() as $item) { ?>
               <tr>
                 <td><?= $item->name ?></td>
                 <td><?= $item->description ?></td>
                 <td><img src="<?= "images/items/".$item->img ?>" /></td>
-                <td class="price"><?= $item->price ?>$</td>
+                <td class="price"><?= $item->price ?></td>
                 <td><a href="#" class="btn btn-primary" value="<?= $item->id ?>">Buy</a></td>
               <?php } ?>
               </tr>
@@ -70,16 +70,20 @@ include "general.php";
               <i class="icon-shopping-cart"></i>
               <span>Shopping-cart</span>
             </div>
-            <table class="table table-striped">
-              <?php foreach ($functions->fetchSelectedItems() as $item) { ?>
+            <table class="table table-striped" id="cart">
+              <?php
+              $total = 0;
+              foreach ($functions->fetchSelectedItems() as $key => $item) { 
+              $total += $item->price;
+              ?>
               <tr>
                 <td><?= $item->name ?></td>
                 <td class="price"><?= $item->price ?></td>
-                <td><button class="close">&times;</button></td>
+                <td><a href="#" class="close" value="<?= $key ?>">&times;</a></td>
               </tr>
               <?php } ?>
             </table>
-            <div class="title white">Total price: 2400$</div>
+            <div class="title white">Total price: <span id="total-price"><?= $total ?></span>$</div>
           </div>
         </div>
       </div>
@@ -107,17 +111,50 @@ include "general.php";
 	<script>
 		$(function() {
       var items = $.cookie("items");
-      if (items != undefined) {
+      if (items != undefined && items != "") {
         items = items.split("-");
       } else {
         items = new Array();
       }
 
-      $("table td a").click(function() {
+      var calculateTotalPrice = function() {
+        var total = 0;
+        var $tr = $("#cart").find("tr");
+        $tr.each(function() {
+          var price = $(this).children("td:nth-child(2)").html();
+          total += parseInt(price);
+        });
+        $("#total-price").html(total);
+      };
+
+      var deleteFromCart = function() {
+        var key = $(this).parent("tr").index()-1;
+        items.splice(key, 1);
+        $.cookie("items", items.join("-"));
+        $(this).parents("tr").remove();
+        calculateTotalPrice();
+      };
+
+      $("#items td a").click(function() {
         var id = $(this).attr("value");
         items.push(id);
         $.cookie("items", items.join("-"));
+        var table = document.getElementById("cart");
+        var row = table.insertRow(-1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var $tr = $(this).parents("tr");
+        cell1.innerHTML = $tr.children("td:nth-child(1)").html();
+        cell2.innerHTML = $tr.children("td:nth-child(4)").html();
+        cell2.className = "price";
+        cell3.innerHTML = "<a href=\"#\" class=\"close\">&times;</a>";
+        $(cell3).children("a").click(deleteFromCart);
+        calculateTotalPrice();
       });
+
+      $("#cart td a").click(deleteFromCart);
+      
     });
 	</script>
 </body>
