@@ -84,6 +84,7 @@ include "general.php";
               <?php } ?>
             </table>
             <div class="title white">Total price: <span id="total-price"><?= $total ?></span>$</div>
+            <a href="checkout.php" id="checkoutbtn" class="btn btn-large btn-block btn-success">Procceed to checkout</a>
           </div>
         </div>
       </div>

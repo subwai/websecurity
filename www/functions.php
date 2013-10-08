@@ -91,7 +91,7 @@ class Functions {
 	}
 
 	function logout() {
-		if (!isset($_SESSION["id"])) {
+		if (!$_SESSION["auth"]) {
 			throw new Exception("You have not yet logged in.");
 		}
 

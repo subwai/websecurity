@@ -124,3 +124,8 @@ table td.price:after {
 .well table td:last-child {
   width:10px;
 }
+
+#checkoutbtn {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
