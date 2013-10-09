@@ -52,14 +52,14 @@ include "general.php";
         <div class="span9">
           <table class="table table-striped table-bordered" id="items">
             <tbody>
-              <?php foreach ($functions->fetchItems() as $item) { ?>
+              <?php foreach ($functions->fetchItems() as $item): ?>
               <tr>
                 <td><?= $item->name ?></td>
                 <td><?= $item->description ?></td>
                 <td><img src="<?= "images/items/".$item->img ?>" /></td>
                 <td class="price"><?= $item->price ?></td>
                 <td><a href="#" class="btn btn-primary" value="<?= $item->id ?>">Buy</a></td>
-              <?php } ?>
+              <?php endforeach; ?>
               </tr>
             </tbody>
           </table>
@@ -73,7 +73,7 @@ include "general.php";
             <table class="table table-striped" id="cart">
               <?php
               $total = 0;
-              foreach ($functions->fetchSelectedItems() as $key => $item) { 
+              foreach ($functions->fetchSelectedItems() as $key => $item):
               $total += $item->price;
               ?>
               <tr>
@@ -81,7 +81,7 @@ include "general.php";
                 <td class="price"><?= $item->price ?></td>
                 <td><a href="#" class="close" value="<?= $key ?>">&times;</a></td>
               </tr>
-              <?php } ?>
+              <?php endforeach; ?>
             </table>
             <div class="title white">Total price: <span id="total-price"><?= $total ?></span>$</div>
             <a href="checkout.php" id="checkoutbtn" class="btn btn-large btn-block btn-success">Procceed to checkout</a>

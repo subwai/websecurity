@@ -73,11 +73,19 @@ if (isset($_POST["username"]) && $_POST["password"]) {
         <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>Welcome <?= $_SESSION["username"] ?>!</strong> Successfully logged in your account.
       </div>
+      <?php if (isset($_GET["return"])) { ?>
+      <a href="<?= $_GET["return"] ?>"><h3>Continue</h3></a>
+      <?php } else { ?>
       <a href="index.php"><h3>Start browsing our items!</h3></a>
+      <?php } ?>
 
       <?php } else { ?>
 
+      
       <form method="post" class="form-horizontal">
+        <?php if (isset($_GET["return"])) { ?>
+        <div class="alert alert-info">Please log in before continuing.</div>
+        <?php } ?>
         <div class="control-group">
           <label class="control-label" for="inputUsername">Username</label>
           <div class="controls">

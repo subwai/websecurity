@@ -2,6 +2,12 @@
 include "functions.php";
 include "general.php";
 
+/* Force login before checkout */
+if (!$_SESSION["auth"]) {
+  header("Location: https://".$_SERVER["HTTP_HOST"]."/login.php?return=checkout.php");
+  exit();
+}
+
 $error = false;
 if (isset($_POST["checkoutSubmit"])) {
   try {
@@ -67,14 +73,14 @@ if (isset($_POST["checkoutSubmit"])) {
               </thead>
               <?php
               $total = 0;
-              foreach ($functions->fetchSelectedItems() as $key => $item) { 
+              foreach ($functions->fetchSelectedItems() as $key => $item):
               $total += $item->price;
               ?>
               <tr>
                 <td><?= $item->name ?></td>
                 <td class="price"><?= $item->price ?></td>
               </tr>
-              <?php } ?>
+              <?php endforeach; ?>
             </table>
             <div class="pull-right">Total price: <strong><?= $total ?>$</strong></div>
           </div>

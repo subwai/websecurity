@@ -76,12 +76,12 @@ if (isset($_GET["id"])) {
               <th>Item</th>
               <th>Price</th>
             </thead>
-            <?php foreach ($functions->fetchOrderItems($order) as $key => $item) { ?>
+            <?php foreach ($functions->fetchOrderItems($order) as $key => $item): ?>
             <tr>
               <td><?= $item->name ?></td>
               <td class="price"><?= $item->price ?></td>
             </tr>
-            <?php } ?>
+            <?php endforeach; ?>
           </table>
           <div class="pull-right">Total price: <strong><?= $order->totalPrice ?>$</strong></div>
         </div>
