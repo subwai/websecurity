@@ -224,8 +224,8 @@ class Functions {
 
 	private function dbConnect() {
 		if (!$this->conn) {
-			require_once "../dbconfig.php";
-			$this->conn = new PDO("mysql:host=".$host.";dbname=websecurity", $username, $password);
+			$ini = parse_ini_file("../database.ini");
+			$this->conn = new PDO("mysql:host=".$ini["host"].";dbname=".$ini["database"], $ini["username"], $ini["password"]);
 		}
 	}
 
