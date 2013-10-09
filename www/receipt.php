@@ -3,17 +3,21 @@ include "functions.php";
 include "general.php";
 
 $error = false;
-try {
-  $functions->logout();
-} catch(Exception $e) {
-  $error = $e->getMessage();
+$order = false;
+if (isset($_GET["id"])) {
+  try {
+    $order = $functions->fetchOrder($_GET["id"]);
+  } catch(Exception $e) {
+    $error = $e->getMessage();
+  }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Websecurity shop - Logout</title>
+    <title>Websecurity shop - Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -39,7 +43,11 @@ try {
             <a class="brand" href="index.php">Websecurity shop</a>
             <div class="nav-collapse collapse">
               <ul class="nav">
+                <?php if ($_SESSION["auth"]) { ?>
+                <li><div class="nav-acc"><?= $_SESSION["username"] ?> (<a href="logout.php">Logout</a>)</div></li>
+                <?php } else { ?>
                 <li><a href="login.php">Login</a></li>
+                <?php } ?>
               </ul>
             </div><!--/.nav-collapse -->
         </div><!-- /.container -->
@@ -51,23 +59,47 @@ try {
 
     <div class="container main">
 
-      <h1>Logout</h1>
-
       <?php if ($error) { ?>
 
       <div class="alert alert-error">
-        <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>Oh snap!</strong> <?= $error; ?>
+      </div>
+
+      <?php } elseif($order) { ?>
+
+      <h1>Receipt</h1>
+      <h4>Order Id: #<?= $order->id ?></h4>
+      <div class="row-fluid">
+        <div class="row">
+          <table class="table" id="cart">
+            <thead>
+              <th>Item</th>
+              <th>Price</th>
+            </thead>
+            <?php foreach ($functions->fetchOrderItems($order) as $key => $item) { ?>
+            <tr>
+              <td><?= $item->name ?></td>
+              <td class="price"><?= $item->price ?></td>
+            </tr>
+            <?php } ?>
+          </table>
+          <div class="pull-right">Total price: <strong><?= $order->totalPrice ?>$</strong></div>
+        </div>
+        <hr>
+        <div class="alert alert-info">
+          Status: <strong><?= $order->status ?></strong>
+        </div>
       </div>
 
       <?php } else { ?>
 
-      <div class="alert alert-success">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>Well done!</strong> You successfully logged out from your account.
-      </div>
+        <div class="alert alert-warning">
+          <strong>Sorry!</strong> You need a receipt id to see this page.
+        </div>
 
       <?php } ?>
+
+      <!-- /END THE FEATURETTES -->
 
     </div><!-- /.container -->
 
@@ -85,16 +117,7 @@ try {
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="jquery.cookie.js"></script>
   <script src="bootstrap/js/bootstrap.min.js"></script>
-  <script>
-    var current;
-    function showDetails(val) {
-      if (current != val) {
-        $("#details-wrap div").hide("fast");
-        $("#"+val+"-d").show("fast");
-        current = val;
-      }
-    }
-  </script>
 </body>
 </html>

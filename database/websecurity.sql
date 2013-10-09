@@ -58,7 +58,6 @@ CREATE TABLE `accounts` (
   `hashpass` varchar(128) NOT NULL,
   `salt` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -72,6 +71,69 @@ LOCK TABLES `accounts` WRITE;
 INSERT INTO `accounts` VALUES (1,'ALARUE','8728250d315a663abbfea30dcbd8e83e4c91f4c01da05d99efdfd810ca0ef226bf593a1f22d74662c4102d1301c92c72a6495d6666faa556de88728c72036dac','607e02c6a044aad0e63c5f8a07acbdb6');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `account` int(11) NOT NULL,
+  `email` text,
+  `fname` varchar(45) DEFAULT NULL,
+  `lname` varchar(45) DEFAULT NULL,
+  `address` varchar(45) DEFAULT NULL,
+  `postcode` varchar(45) DEFAULT NULL,
+  `city` varchar(45) DEFAULT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  `totalPrice` float NOT NULL DEFAULT '0',
+  `status` varchar(45) NOT NULL DEFAULT 'Unverified',
+  PRIMARY KEY (`id`),
+  KEY `account` (`account`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`account`) REFERENCES `accounts` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orders`
+--
+
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,1,'adam.h.lyren@gmail.com','Adam','Hansson Lyrén','Tornavägen 17A','22363','Lund','46727453500',400,'Complete'),(2,1,'adam.h.lyren@gmail.com','Adam','Hansson Lyrén','Tornavägen 17A','22363','Lund','46727453500',1700,'Complete');
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `order_items`
+--
+
+DROP TABLE IF EXISTS `order_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `order_items` (
+  `orderid` int(11) NOT NULL,
+  `itemid` int(11) NOT NULL,
+  `price` float NOT NULL DEFAULT '0',
+  KEY `orderid` (`orderid`),
+  KEY `itemid` (`itemid`),
+  CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`orderid`) REFERENCES `orders` (`id`),
+  CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`itemid`) REFERENCES `items` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_items`
+--
+
+LOCK TABLES `order_items` WRITE;
+/*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
+INSERT INTO `order_items` VALUES (1,3,400),(2,3,400),(2,3,400),(2,1,900);
+/*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -82,4 +144,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-08  3:03:09
+-- Dump completed on 2013-10-09  3:04:29
