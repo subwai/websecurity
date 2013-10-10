@@ -97,7 +97,7 @@ if (isset($_POST["checkoutSubmit"])) {
             <div class="control-group">
               <label class="control-label" for="inputEmail">Email</label>
               <div class="controls">
-                <input type="text" id="inputEmail" name="inputEmail" placeholder="Email" value="<?= getPostIfIsset("inputEmail") ?>" class="span10">
+                <input type="email" id="inputEmail" name="inputEmail" placeholder="Email" value="<?= getPostIfIsset("inputEmail") ?>" class="span10">
               </div>
             </div>
             <div class="controls controls-row">
@@ -137,7 +137,7 @@ if (isset($_POST["checkoutSubmit"])) {
             <div class="control-group">
               <label class="control-label" for="inputPhone">Phone-number</label>
               <div class="controls">
-                <input type="text" id="inputPhone" name="inputPhone" placeholder="Phone-number" value="<?= getPostIfIsset("inputPhone") ?>" class="span5">
+                <input type="tel" id="inputPhone" name="inputPhone" placeholder="Phone-number" value="<?= getPostIfIsset("inputPhone") ?>" class="span5">
               </div>
             </div>
             <hr><h5>Payment details <small>You don't need to fill this, since this is just a test site...</small></h5>
@@ -192,6 +192,13 @@ if (isset($_POST["checkoutSubmit"])) {
                     <option>2018</option>
                   </select>
                 </div>
+              </div>
+            </div>
+            <<hr><h5>Confirm by entering your password</h5>
+            <div class="control-group">
+              <label class="control-label" for="inputPassword">Password</label>
+              <div class="controls">
+                <input type="password" id="inputPhone" name="inputPassword" placeholder="Password" value="<?= getPostIfIsset("inputPassword") ?>" class="span5">
               </div>
             </div>
             <button name="checkoutSubmit" class="btn btn-large btn-success">Procceed to payment</button>

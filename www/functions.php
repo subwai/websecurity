@@ -52,6 +52,26 @@ class Functions {
 	}
 
 	public function checkout() {
+		$this->dbConnect();
+		if ($this->IsNullOrEmptyString($_POST["inputPassword"])) {
+			throw new Exception("Please enter your password.");
+		}
+		$stmt = $this->conn->prepare("SELECT salt FROM accounts WHERE id = ?");
+		$stmt->execute(array(
+			$_SESSION["id"]
+		));
+		$res = $stmt->fetch(PDO::FETCH_OBJ);
+
+		$hashpass = hash("sha512", $_POST["inputPassword"].$res->salt);
+
+		$stmt = $this->conn->prepare("SELECT id FROM accounts WHERE username = ? AND hashpass = ?");
+		$stmt->execute(array(
+			$_SESSION["username"],
+			$hashpass
+		));
+		if ($stmt->rowCount() != 1) {
+			throw new Exception("Your password does not match.");
+		}
 
 		/*****************************************
 		 * Check the userdata and make sure everything is filled and valid.
@@ -113,7 +133,6 @@ class Functions {
 			$itemids = isset($_COOKIE["items"]) ? explode("-", $_COOKIE["items"]) : array();
 			$totalPrice = 0;
 
-			$this->dbConnect();
 			$stmt = $this->conn->prepare("SELECT price FROM items WHERE id = ?");
 			$remove = array();
 			$prices = array();
