@@ -189,9 +189,15 @@ class Functions {
 
 	public function register($username, $password, $password_repeat) {
 
+		if ($this->IsNullOrEmptyString($username)) {
+			throw new Exception("Please enter a username.");
+		}
 		if (!preg_match("/^[a-zA-Z0-9]+$/i", $username)) {
 	    	throw new Exception("Username has illegal characters.");
 	  	}
+	  	if ($this->IsNullOrEmptyString($password)) {
+			throw new Exception("Please enter a password.");
+		}
 		if ($password != $password_repeat) {
 	    	throw new Exception("Passwords does not match.");
 	  	}
@@ -219,6 +225,13 @@ class Functions {
 	}
 
 	public function login($username, $password) {
+		if ($this->IsNullOrEmptyString($username)) {
+			throw new Exception("Please enter a username.");
+		}
+		if ($this->IsNullOrEmptyString($password)) {
+			throw new Exception("Please enter a password.");
+		}
+
 		$username = strtoupper($username);
 
 		$this->dbConnect();
@@ -243,6 +256,9 @@ class Functions {
 			$_SESSION["auth"] = true;
 			$_SESSION["identity"] = $_SERVER["REMOTE_ADDR"].":".$_SERVER["HTTP_USER_AGENT"];
 			return true;
+		} else {
+			$attempts++; // Not in use, but could protect against bruteforce.
+			throw new Exception("Username/password combination does not match.");
 		}
 	}
 
