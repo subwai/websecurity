@@ -59,7 +59,7 @@ if (isset($_POST["checkoutSubmit"])) {
     ================================================== -->
 
     <div class="container main">
-      <h1>Items</h1>
+      <h1>Checkout</h1>
       <div class="row-fluid">
         <div class="span9">
           <div class="row">
