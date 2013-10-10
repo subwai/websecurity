@@ -12,6 +12,7 @@ body {
   min-height: 100%;
   box-sizing: border-box;
   position: relative;
+  background-color: #e9eae5;
 }
 .container.main {
   padding: 80px 0;
@@ -44,74 +45,109 @@ footer {
   margin-top: 20px;
   /*margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
 }
-.navbar-wrapper .navbar {
-
-}
 
 /* Remove border and change up box shadow for more contrast */
 .navbar .navbar-inner {
-  border: 0;
-  -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
-     -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
-          box-shadow: 0 2px 10px rgba(0,0,0,.25);
+  -webkit-box-shadow: 0 1px 1px rgba(6,8,8,0.1);
+     -moz-box-shadow: 0 1px 1px rgba(6,8,8,0.1);
+          box-shadow: 0 1px 1px rgba(6,8,8,0.1);
+
+  background:#fff;
+  border:0;
+  height:62px;
 }
 
-/* Downsize the brand/project name a bit */
+.navbar .container {
+  height: 100%;
+}
+.navbar .nav-block {
+  display: inline-block;
+  padding: 0 18px;
+  color: #3a3a3a;
+  font-weight: 700;
+  font-size: 12px;
+  height: 62px;
+  line-height: 62px;
+  text-align: center;
+  vertical-align: middle;
+}
+.navbar .nav-link {
+  display: inline-block;
+  padding: 0 18px;
+  color: #3a3a3a;
+  font-weight: 700;
+  font-size: 12px;
+  height: 62px;
+  line-height: 62px;
+  text-align: center;
+  vertical-align: middle;
+}
+.navbar .nav-link:hover {
+  color: #2c9ab7;
+  background: #f9f9f9;
+  text-decoration: none;
+}
 .navbar .brand {
-  padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
   font-size: 16px;
-  font-weight: bold;
-  text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+  margin:0;
+  text-shadow:none;
 }
-
-.navbar .nav-acc {
-  color: #999999;
-  padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
-  text-shadow: 0 -1px 0 rgba(0,0,0,.5);
-}
-
-/* Navbar links: increase padding for taller navbar */
 .navbar .nav > li > a {
   padding: 15px 20px;
 }
-
-/* Offset the responsive button for proper vertical alignment */
 .navbar .btn-navbar {
   margin-top: 10px;
 }
 
 /* Item listing
 -------------------------------------------------- */
+.container .table-striped {
+  background: #f5f5f5;
+}
+.container .table-striped th {
+  background: #eeeeee;
+}
 .container table td {
   vertical-align: middle;
 }
 .container table td img {
-  width:50px;
-  height:50px;
+  width: 50px;
+  height: 50px;
 }
 .container table td:last-child {
-  width:50px;
+  width: 80px;
+  text-align: center;
 }
-
-table td.price {
+table td.image,
+table th.image {
+  width: 50px;
+}
+table td.price,
+table th.price {
   width: 60px;
   text-align: center;
 }
 table td.price:after {
   content:"$";
 }
-
-.well {
-  background:#fff;
-  padding:0px;
-}
-.well .title {
-  padding:8px;
-  background-color: #eeeeee;@@
+.title {
   font-size: 12px;
   font-weight: bold;
   color: #9da0a4;
   text-align: center;
+}
+.well {
+  background:#fff;
+  padding:0px;
+  border: 1px solid #ccc;
+}
+.well .title {
+  padding:8px;
+  background-color: #eeeeee;
+  border-bottom:1px solid #ccc;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
 }
 .well .white {
   background:#d9edf7;
@@ -119,12 +155,13 @@ table td.price:after {
 }
 .well table {
   margin-bottom: 0px;
+}
+.well table tr:last-child td {
   border-bottom: 1px solid #dddddd;
 }
 .well table td:not(:first-child) {
   border-left: 1px solid #dddddd;
 }
-
 .well table td:last-child {
   width:10px;
 }
@@ -132,4 +169,65 @@ table td.price:after {
 #checkoutbtn {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+#cart {
+  margin-top:-38px;
+  z-index:1;
+  position: relative;
+}
+.cart-container {
+  position: relative;
+  min-height:37px;
+}
+.cart-background {
+  top:0px;
+  position: relative;
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #dddddd;
+}
+.cart-background h5 {
+  margin:0;
+  line-height: 18px;
+  padding:9px 0;
+}
+
+
+/* Core bootstrap changes */
+.table-bordered th, .table-bordered td {
+  border-left: 1px solid #ccc;
+}
+.table th, .table td {
+  border-top: 1px solid #ccc;
+}
+textarea, input[type="text"], input[type="password"],
+input[type="datetime"], input[type="datetime-local"],
+input[type="date"], input[type="month"], input[type="time"],
+input[type="week"], input[type="number"], input[type="email"],
+input[type="url"], input[type="search"], input[type="tel"],
+input[type="color"], .uneditable-input {
+  border: 1px solid #bbb;
+}
+.alert-success {
+  border-color: #BCD5A8;
+}
+.alert-danger, .alert-error {
+  border-color: #F1BDC5;
+}
+.alert-info {
+  border-color: #ADDCE6;
+}
+.img-polaroid {
+  padding:0;
+}
+.table-striped tbody > tr:nth-child(odd) > td,
+.table-striped tbody > tr:nth-child(odd) > th {
+  background-color: #fcfcfc;
+}
+.table-bordered {
+  border: 1px solid #ccc;
+}
+hr {
+  border-top: 1px solid #C4C4C4;
 }

@@ -34,23 +34,20 @@ if (isset($_GET["id"])) {
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container">
+        <nav class="container">
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="index.php">Websecurity shop</a>
-            <div class="nav-collapse collapse">
-              <ul class="nav">
-                <?php if ($_SESSION["auth"]) { ?>
-                <li><div class="nav-acc"><?= $_SESSION["username"] ?> (<a href="logout.php">Logout</a>)</div></li>
-                <?php } else { ?>
-                <li><a href="login.php">Login</a></li>
-                <?php } ?>
-              </ul>
-            </div><!--/.nav-collapse -->
-        </div><!-- /.container -->
+            <a class="nav-link brand" href="index">Websecurity shop</a>
+            <?php if ($_SESSION["auth"]) { ?>
+            <div class="nav-block">Account: <?= $_SESSION["username"] ?></div>
+            <a class="nav-link" href="logout">Logout</a>
+            <?php } else { ?>
+            <a class="nav-link" href="login">Login</a>
+            <?php } ?>
+        </nav><!-- /.container -->
       </div><!-- /.navbar-inner -->
     </div><!-- /.navbar -->
 
@@ -71,7 +68,7 @@ if (isset($_GET["id"])) {
       <h4>Order Id: #<?= $order->id ?></h4>
       <div class="row-fluid">
         <div class="row">
-          <table class="table" id="cart">
+          <table class="table">
             <thead>
               <th>Item</th>
               <th>Price</th>
@@ -107,7 +104,7 @@ if (isset($_GET["id"])) {
     <footer>
       <div class="container">
         <p class="pull-right"><a href="#">Tillbaka till toppen</a></p>
-        <p>© 2013 Websäkerhet, LTH · <a href="about.php">Contact</a></p>
+        <p>© 2013 Websäkerhet, LTH · <a href="about">Contact</a></p>
       </div>
     </footer>
 

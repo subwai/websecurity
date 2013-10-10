@@ -23,23 +23,20 @@ include "general.php";
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-      	<div class="container">
+      	<nav class="container">
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="index.php">Websecurity shop</a>
-            <div class="nav-collapse collapse">
-              <ul class="nav">
-                <?php if ($_SESSION["auth"]) { ?>
-                <li><div class="nav-acc"><?= $_SESSION["username"] ?> (<a href="logout.php">Logout</a>)</div></li>
-                <?php } else { ?>
-                <li><a href="login.php">Login</a></li>
-                <?php } ?>
-              </ul>
-            </div><!--/.nav-collapse -->
-      	</div><!-- /.container -->
+            <a class="nav-link brand" href="index">Websecurity shop</a>
+            <?php if ($_SESSION["auth"]) { ?>
+            <div class="nav-block">Account: <?= $_SESSION["username"] ?></div>
+            <a class="nav-link" href="logout">Logout</a>
+            <?php } else { ?>
+            <a class="nav-link" href="login">Login</a>
+            <?php } ?>
+      	</nav><!-- /.container -->
       </div><!-- /.navbar-inner -->
     </div><!-- /.navbar -->
 
@@ -51,12 +48,19 @@ include "general.php";
       <div class="row-fluid">
         <div class="span9">
           <table class="table table-striped table-bordered" id="items">
+            <thead>
+              <th class="title">NAME</th>
+              <th class="title">DESCRIPTION</th>
+              <th></th>
+              <th class="price title">PRICE</th>
+              <th class="title">ITEM-LIST <i class="icon-th-list"></i></th>
+            </thead>
             <tbody>
               <?php foreach ($functions->fetchItems() as $item): ?>
               <tr>
                 <td><?= $item->name ?></td>
                 <td><?= $item->description ?></td>
-                <td><img src="<?= "images/items/".$item->img ?>" /></td>
+                <td class="image"><img src="<?= "images/items/".$item->img ?>" class="img-polaroid" /></td>
                 <td class="price"><?= $item->price ?></td>
                 <td><a href="#" class="btn btn-primary" value="<?= $item->id ?>">Buy</a></td>
               <?php endforeach; ?>
@@ -68,23 +72,28 @@ include "general.php";
           <div class="well">
             <div class="title">
               <i class="icon-shopping-cart"></i>
-              <span>Shopping-cart</span>
+              <span>SHOPPING-CART</span>
             </div>
-            <table class="table table-striped" id="cart">
-              <?php
-              $total = 0;
-              foreach ($functions->fetchSelectedItems() as $key => $item):
-              $total += $item->price;
-              ?>
-              <tr>
-                <td><?= $item->name ?></td>
-                <td class="price"><?= $item->price ?></td>
-                <td><a href="#" class="close" value="<?= $key ?>">&times;</a></td>
-              </tr>
-              <?php endforeach; ?>
-            </table>
+            <div class="cart-container">
+              <div class="cart-background">
+                <h5>Your cart is empty</h5>
+              </div>
+              <table class="table table-striped" id="cart">
+                <?php
+                $total = 0;
+                foreach ($functions->fetchSelectedItems() as $key => $item):
+                $total += $item->price;
+                ?>
+                <tr>
+                  <td><?= $item->name ?></td>
+                  <td class="price"><?= $item->price ?></td>
+                  <td><a href="#" class="close" value="<?= $key ?>">&times;</a></td>
+                </tr>
+                <?php endforeach; ?>
+              </table>
+            </div>
             <div class="title white">Total price: <span id="total-price"><?= $total ?></span>$</div>
-            <a href="checkout.php" id="checkoutbtn" class="btn btn-large btn-block btn-success">Procceed to checkout</a>
+            <a href="checkout" id="checkoutbtn" class="btn btn-large btn-block btn-success">Procceed to checkout</a>
           </div>
         </div>
       </div>
@@ -97,7 +106,7 @@ include "general.php";
     <footer>
       <div class="container">
         <p class="pull-right"><a href="#">Tillbaka till toppen</a></p>
-        <p>© 2013 Websäkerhet, LTH · <a href="about.php">Contact</a></p>
+        <p>© 2013 Websäkerhet, LTH · <a href="about">Contact</a></p>
       </div>
     </footer>
 

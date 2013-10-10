@@ -33,23 +33,20 @@ if (isset($_POST["username"]) && $_POST["password"]) {
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-      	<div class="container">
+        <nav class="container">
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="index.php">Websecurity shop</a>
-            <div class="nav-collapse collapse">
-              <ul class="nav">
-                <?php if ($_SESSION["auth"]) { ?>
-                <li><div class="nav-acc"><?= $_SESSION["username"] ?> (<a href="logout.php">Logout</a>)</div></li>
-                <?php } else { ?>
-                <li><a href="login.php">Login</a></li>
-                <?php } ?>
-              </ul>
-            </div><!--/.nav-collapse -->
-      	</div><!-- /.container -->
+            <a class="nav-link brand" href="index">Websecurity shop</a>
+            <?php if ($_SESSION["auth"]) { ?>
+            <div class="nav-block">Account: <?= $_SESSION["username"] ?></div>
+            <a class="nav-link" href="logout">Logout</a>
+            <?php } else { ?>
+            <a class="nav-link" href="login">Login</a>
+            <?php } ?>
+        </nav><!-- /.container -->
       </div><!-- /.navbar-inner -->
     </div><!-- /.navbar -->
 
@@ -76,7 +73,7 @@ if (isset($_POST["username"]) && $_POST["password"]) {
       <?php if (isset($_GET["return"])) { ?>
       <a href="<?= $_GET["return"] ?>"><h3>Continue</h3></a>
       <?php } else { ?>
-      <a href="index.php"><h3>Start browsing our items!</h3></a>
+      <a href="index"><h3>Start browsing our items!</h3></a>
       <?php } ?>
 
       <?php } else { ?>
@@ -101,7 +98,7 @@ if (isset($_POST["username"]) && $_POST["password"]) {
         <div class="control-group">
           <div class="controls">
             <button type="submit" class="btn">Sign in</button>
-            <p>No account yet? Register <a href="register.php">here!</a></p>
+            <p>No account yet? Register <a href="register">here!</a></p>
           </div>
         </div>
       </form>
@@ -114,7 +111,7 @@ if (isset($_POST["username"]) && $_POST["password"]) {
     <footer>
       <div class="container">
         <p class="pull-right"><a href="#">Tillbaka till toppen</a></p>
-        <p>© 2013 Websäkerhet, LTH · <a href="about.php">Contact</a></p>
+        <p>© 2013 Websäkerhet, LTH · <a href="about">Contact</a></p>
       </div>
     </footer>
 

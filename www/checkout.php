@@ -4,7 +4,7 @@ include "general.php";
 
 /* Force login before checkout */
 if (!$_SESSION["auth"]) {
-  header("Location: https://".$_SERVER["HTTP_HOST"]."/login.php?return=checkout.php");
+  header("Location: https://".$_SERVER["HTTP_HOST"]."/login?return=checkout");
   exit();
 }
 
@@ -38,23 +38,20 @@ if (isset($_POST["checkoutSubmit"])) {
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container">
+        <nav class="container">
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="index.php">Websecurity shop</a>
-            <div class="nav-collapse collapse">
-              <ul class="nav">
-                <?php if ($_SESSION["auth"]) { ?>
-                <li><div class="nav-acc"><?= $_SESSION["username"] ?> (<a href="logout.php">Logout</a>)</div></li>
-                <?php } else { ?>
-                <li><a href="login.php">Login</a></li>
-                <?php } ?>
-              </ul>
-            </div><!--/.nav-collapse -->
-        </div><!-- /.container -->
+            <a class="nav-link brand" href="index">Websecurity shop</a>
+            <?php if ($_SESSION["auth"]) { ?>
+            <div class="nav-block">Account: <?= $_SESSION["username"] ?></div>
+            <a class="nav-link" href="logout">Logout</a>
+            <?php } else { ?>
+            <a class="nav-link" href="login">Login</a>
+            <?php } ?>
+        </nav><!-- /.container -->
       </div><!-- /.navbar-inner -->
     </div><!-- /.navbar -->
 
@@ -66,7 +63,7 @@ if (isset($_POST["checkoutSubmit"])) {
       <div class="row-fluid">
         <div class="span9">
           <div class="row">
-            <table class="table" id="cart">
+            <table class="table">
               <thead>
                 <th>Item</th>
                 <th>Price</th>
@@ -143,7 +140,7 @@ if (isset($_POST["checkoutSubmit"])) {
                 <input type="text" id="inputPhone" name="inputPhone" placeholder="Phone-number" value="<?= getPostIfIsset("inputPhone") ?>" class="span5">
               </div>
             </div>
-            <hr><h5>Payment details</h5>
+            <hr><h5>Payment details <small>You don't need to fill this, since this is just a test site...</small></h5>
             <div class="control-group">
               <label class="control-label" for="inputCardOwner">Credit-card owners full name</label>
               <div class="controls">
@@ -201,7 +198,7 @@ if (isset($_POST["checkoutSubmit"])) {
           </form>
         </div>
         <div class="span3">
-          <a href="index.php" class="btn btn-large btn-block btn-danger">Back to item-list</a>
+          <a href="index" class="btn btn-large btn-block btn-danger">Back to item-list</a>
         </div>
       </div>
 
@@ -213,7 +210,7 @@ if (isset($_POST["checkoutSubmit"])) {
     <footer>
       <div class="container">
         <p class="pull-right"><a href="#">Tillbaka till toppen</a></p>
-        <p>© 2013 Websäkerhet, LTH · <a href="about.php">Contact</a></p>
+        <p>© 2013 Websäkerhet, LTH · <a href="about">Contact</a></p>
       </div>
     </footer>
 

@@ -6,13 +6,6 @@ class Functions {
 
 	private $conn;
 
-	public function requireSSL() {
-		if($_SERVER["HTTPS"] != "on") {
-		    header("Location: https://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"]);
-		    exit();
-		}
-	}
-
 	public function fetchItems() {
 		$this->dbConnect();
 		$stmt = $this->conn->query("SELECT * FROM items");
@@ -72,21 +65,39 @@ class Functions {
 		if ($this->IsNullOrEmptyString($_POST["inputFirstName"])) {
 			throw new Exception("Please enter a first name.");
 		}
+		if (!preg_match("~^(?:[\p{L}\p{Mn}\p{Pd}\'\x{2019}]+\s?)+$~u", $_POST["inputFirstName"])) {
+	    	throw new Exception("First name has illegal characters.");
+	  	}
 		if ($this->IsNullOrEmptyString($_POST["inputLastName"])) {
 			throw new Exception("Please enter a last name.");
 		}
+		if (!preg_match("~^(?:[\p{L}\p{Mn}\p{Pd}\'\x{2019}]+\s?)+$~u", $_POST["inputLastName"])) {
+	    	throw new Exception("Last name has illegal characters.");
+	  	}
 		if ($this->IsNullOrEmptyString($_POST["inputAddress"])) {
 			throw new Exception("Please enter an address.");
 		}
+		if (!preg_match("~^([a-zA-Z0-9\p{L}]+\s?)+$~u", $_POST["inputAddress"])) {
+	    	throw new Exception("Address has illegal characters.");
+	  	}
 		if ($this->IsNullOrEmptyString($_POST["inputPostcode"])) {
 			throw new Exception("Please enter a postcode.");
 		}
+		if (!preg_match("/^([0-9]+\s?)+$/i", $_POST["inputPostcode"])) {
+	    	throw new Exception("Postcode has illegal characters.");
+	  	}
 		if ($this->IsNullOrEmptyString($_POST["inputCity"])) {
 			throw new Exception("Please enter a city.");
 		}
+		if (!preg_match("~^(?:[\p{L}\p{Mn}\p{Pd}\'\x{2019}]+\s?)+$~u", $_POST["inputCity"])) {
+	    	throw new Exception("City has illegal characters.");
+	  	}
 		if ($this->IsNullOrEmptyString($_POST["inputPhone"])) {
 			throw new Exception("Please enter a phone-number.");
 		}
+		if (!preg_match("/^([\+0-9]+\s?)+$/i", $_POST["inputPhone"])) {
+	    	throw new Exception("Phone number has illegal characters.");
+	  	}
 
 		/*****************************************
 		 * Controll the payment details with the bank.
@@ -159,12 +170,14 @@ class Functions {
 
 	public function register($username, $password, $password_repeat) {
 
-		if ($password != $password_repeat) {
-	    	throw new Exception("Passwords does not match");
+		if (!preg_match("/^[a-zA-Z0-9]+$/i", $username)) {
+	    	throw new Exception("Username has illegal characters.");
 	  	}
-
+		if ($password != $password_repeat) {
+	    	throw new Exception("Passwords does not match.");
+	  	}
 	  	if (strlen($password) < 5) {
-	    	throw new Exception("Password is too short");
+	    	throw new Exception("Password is too short.");
 	  	}
 
 		$username = strtoupper($username);
@@ -205,11 +218,11 @@ class Functions {
 		));
 
 		if ($stmt->rowCount() == 1) {
+			session_regenerate_id();
 			$_SESSION["id"] = $stmt->fetchColumn(0);
 			$_SESSION["username"] = $username;
 			$_SESSION["auth"] = true;
-			session_regenerate_id();
-			$_SESSION["identity"] = $_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"];
+			$_SESSION["identity"] = $_SERVER["REMOTE_ADDR"].":".$_SERVER["HTTP_USER_AGENT"];
 			return true;
 		}
 	}
@@ -219,6 +232,7 @@ class Functions {
 			throw new Exception("You have not yet logged in.");
 		}
 
+		session_unset();
 		session_destroy();
 	}
 
